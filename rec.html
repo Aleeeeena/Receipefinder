@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #recipe-list {
+            margin-top: 20px;
+        }
+        .recipe-card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="text-center mt-5">
+        <h1>Recipe Finder</h1>
+        <p>Search for Recipes and Watch Videos</p>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-bar mt-3">
+        <input type="text" id="search-input" class="form-control" placeholder="Search for recipes..." />
+        <button id="search-btn" class="btn btn-primary mt-2">Search</button>
+    </div>
+
+    <!-- Recipe List -->
+    <div id="recipe-list" class="row mt-4">
+        <!-- Recipe results will be appended here -->
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+// Function to handle search and display the results
+document.getElementById('search-btn').addEventListener('click', function() {
+    const query = document.getElementById('search-input').value.trim();
+    displayRecipe(query);
+});
+
+// Function to display recipe based on search
+function displayRecipe(query) {
+    const recipeList = document.getElementById('recipe-list');
+    recipeList.innerHTML = ''; // Clear previous results
+
+    if (query) {
+        // Create the YouTube search link dynamically with the query
+        const link = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}+recipe`;
+        const card = document.createElement('div');
+        card.classList.add('col-md-4');
+        card.classList.add('recipe-card');
+        card.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${query}</h5>
+                    <p class="card-text">Click below to view the recipe videos for ${query}.</p>
+                    <a href="${link}" target="_blank" class="btn btn-primary">Watch Video</a>
+                </div>
+            </div>
+        `;
+        recipeList.appendChild(card);
+    } else {
+        recipeList.innerHTML = '<p>Please enter a recipe to search for.</p>';
+    }
+}
+</script>
+
+</body>
+</html>
